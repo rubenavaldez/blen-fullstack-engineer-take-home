@@ -6,36 +6,19 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ITask } from '@/interfaces';
 import Link from 'next/link';
 
-export default function Home() {
-  const tasks: ITask[] = [
-    {
-      id: 1234,
-      title: 'this is the title text',
-      description: 'This is the description text ',
-      dueDate: '09/30/24',
-      isCompleted: false,
-      createdAt: '09/12/24',
-      updatedAt: '09/18/24',
-    },
-    {
-      id: 97894,
-      title: 'this is the second title text',
-      description: 'This is the second description text ',
-      dueDate: '10/31/24',
-      isCompleted: false,
-      createdAt: '08/6/24',
-      updatedAt: '09/12/24',
-    },
-  ]; // test data
+import { getTasks } from '@/hooks/tasks';
+import { ITask } from '@/interfaces';
+
+export default async function Home() {
+  const tasks: ITask[] = await getTasks();
 
   return (
     <main className="flex flex-col gap-10 p-10">
       {tasks.map((task) => {
         return (
-          <Link key={'task+' + task.id} href={`/${task.id}`}>
+          <Link key={'task+' + task.id} href={`/task/${task.id}`}>
             <Card>
               <CardHeader>
                 <CardTitle>{task.title}</CardTitle>
@@ -48,7 +31,8 @@ export default function Home() {
               <hr />
               <CardFooter>
                 <p>Created At: {task.createdAt}</p>
-                <br />
+              </CardFooter>
+              <CardFooter>
                 <p>Last updated: {task.updatedAt}</p>
               </CardFooter>
             </Card>
