@@ -8,11 +8,11 @@ import {
 } from '@/components/ui/card';
 import Link from 'next/link';
 
-import { getTasks } from '@/hooks/tasks';
+import { getAllTasks } from '@/hooks/tasks';
 import { ITask } from '@/interfaces';
 
 export default async function Home() {
-  const tasks: ITask[] = await getTasks();
+  const tasks: ITask[] = await getAllTasks();
 
   return (
     <main className="flex flex-col gap-10 p-10">

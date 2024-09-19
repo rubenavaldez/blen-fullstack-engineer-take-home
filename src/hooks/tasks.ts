@@ -1,9 +1,17 @@
 import { db } from '@/db/client';
 import { tasks } from '@/db/schema';
 
-export async function getTasks() {
+export async function getAllTasks() {
   const result = await db.query.tasks.findMany();
   return result;
+}
+
+export async function getTaskById(id: number) {
+  const task = await db.tasks.findUnique({
+    where: { id },
+  });
+  console.log('get one task', task);
+  return task;
 }
 
 export async function createTask(name: string, title: string, description: string) {
