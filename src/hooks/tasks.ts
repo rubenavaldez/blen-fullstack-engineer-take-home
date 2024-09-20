@@ -8,20 +8,11 @@ export async function getAllTasks(): Promise<ITask[]> {
 }
 
 export async function getTaskById(id: number): Promise<ITask | null> {
-  const task: ITask = await db.tasks.findUnique({
-    where: { id: id },
+  const task: ITask = await db.query.tasks.findFirst({
+    where: (tasks: any, { eq }: any) => eq(tasks.id, id),
   });
 
-  // console.log('get one task', task);
-  return {
-    id: task.id,
-    title: task.title,
-    description: task.description,
-    createdAt: task.createdAt,
-    dueDate: task.dueDate,
-    isCompleted: task.isCompleted,
-    updatedAt: task.updatedAt,
-  };
+  return task;
 }
 
 export async function createTask(title: string, description: string, dueDate: String) {
