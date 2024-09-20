@@ -51,3 +51,27 @@ export async function completeTask(id: number): Promise<ITask | null> {
   console.log('Completed task with ID:', id);
   return updatedTask;
 }
+
+export async function editTask(
+  id: number,
+  title?: string,
+  description?: string,
+  dueDate?: string
+): Promise<ITask | null> {
+  const updates: Partial<ITask> = {
+    updatedAt: new Date().toISOString().split('T')[0],
+  };
+
+  if (title !== undefined) updates.title = title;
+  if (description !== undefined) updates.description = description;
+  if (dueDate !== undefined) updates.dueDate = dueDate;
+
+  const updatedTask: ITask = await db
+    .update(tasks)
+    .set(updates)
+    .where(eq(tasks.id, id))
+    .returning();
+
+  console.log('Edited task with ID:', id);
+  return updatedTask;
+}
