@@ -47,7 +47,7 @@ export default function Add() {
 
     console.log('From Data: ', payload);
 
-    router.push(`/middleware/add/${payload.title}/${payload.description}/${payload.dueDate}`);
+    router.push(`/middleware/add/null/${payload.title}/${payload.description}/${payload.dueDate}`);
   };
 
   return (
