@@ -1,140 +1,38 @@
-'use client';
-import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { useRouter } from 'next/navigation';
-import * as React from 'react';
-import { useForm } from 'react-hook-form';
+import { getTaskById } from '@/hooks/tasks';
+import { ITask } from '@/interfaces';
+import Link from 'next/link';
 
-type FormData = {
-  title: string;
-  description: string;
-  dueDate: Date | string;
-};
+interface DetailsProps {
+  params: { id: string };
+}
 
-export default function Edit() {
-  const router = useRouter();
+export default async function Detail({ params }: DetailsProps) {
+  const id = parseInt(params.id);
+  const task: ITask | null = await getTaskById(id);
 
-  const [formData, setFormData] = React.useState<FormData>({
-    title: '',
-    description: '',
-    dueDate: '',
-  });
-
-  const form = useForm<FormData>({
-    defaultValues: {
-      title: '',
-      description: '',
-      dueDate: '',
-    },
-  });
-
-  const onSubmit = async (data: FormData) => {
-    if (!formData.title || !formData.description || !formData.dueDate) return;
-    const payload: FormData = {
-      title: formData.title,
-      description: formData.description,
-      dueDate: formData.dueDate.toString(),
-    };
-
-    console.log('From Data: ', payload);
-
-    router.push('/');
-  };
+  if (!task) {
+    return (
+      <div className="mb-8 flex justify-center">
+        <h3 className="rounded-lg bg-white p-4 text-center text-xl font-semibold text-gray-800 shadow hover:bg-gray-100">
+          Sorry, this is not a valid task.
+        </h3>
+        <Link href="/">
+          <button>Return Home</button>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50">
       <div className="w-full max-w-md rounded-lg bg-gray-700 p-8 shadow-lg">
-        <h2 className="mb-6 text-center text-2xl font-bold">Edit Task</h2>
+        <h2 className="mb-6 text-center text-2xl font-bold text-white">Task Details</h2>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              name="title"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Change Title</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Task Title"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        setFormData((prev) => ({ ...prev, title: e.target.value }));
-                      }}
-                    />
-                  </FormControl>
-                  <FormDescription>Title should be less than 10 words</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name="description"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Change Description</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      placeholder="Description"
-                      {...field}
-                      onChange={(e) => {
-                        field.onChange(e);
-                        setFormData((prev) => ({
-                          ...prev,
-                          description: e.target.value,
-                        }));
-                      }}
-                    />
-                  </FormControl>
-                  <FormDescription>Write a detailed description of the task</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              name="dueDate"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Change Due Date</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="date"
-                      {...field}
-                      value={
-                        field.value instanceof Date
-                          ? field.value.toISOString().split('T')[0]
-                          : field.value
-                      }
-                      onChange={(e) => {
-                        field.onChange(e);
-                        setFormData((prev) => ({ ...prev, dueDate: e.target.value }));
-                      }}
-                    />
-                  </FormControl>
-                  <FormDescription>When does the task need to be completed by?</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button type="submit">Submit</Button>
-          </form>
-        </Form>
+        <Link href="/">
+          <button className="mt-6 w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600">
+            Return Home
+          </button>
+        </Link>
       </div>
     </div>
   );

@@ -40,14 +40,14 @@ export default function Add() {
   const onSubmit = async (data: FormData) => {
     if (!formData.title || !formData.description || !formData.dueDate) return;
     const payload: FormData = {
-      title: formData.title,
-      description: formData.description,
+      title: formData.title.trim(),
+      description: formData.description.trim(),
       dueDate: formData.dueDate.toString(),
     };
 
     console.log('From Data: ', payload);
 
-    router.push('/');
+    router.push(`/middleware/add/${payload.title}/${payload.description}/${payload.dueDate}`);
   };
 
   return (

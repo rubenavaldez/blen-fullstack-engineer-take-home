@@ -21,10 +21,10 @@ export async function createTask(title: string, description: string, dueDate: St
     .values({
       title: title,
       description: description,
-      createdAt: Date.now(),
+      createdAt: new Date().toISOString().split('T')[0],
       dueDate: dueDate,
       isCompleted: false,
-      updatedAt: Date.now(),
+      updatedAt: new Date().toISOString().split('T')[0],
     })
     .returning();
   console.log('create task', result);

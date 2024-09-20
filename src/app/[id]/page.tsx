@@ -33,6 +33,13 @@ export default async function Detail({ params }: DetailsProps) {
 
   return (
     <>
+      <div className="mb-8 flex justify-center">
+        <Link href={`/${params.id}/edit`}>
+          <h1 className="rounded-lg bg-white p-4 text-center text-xl font-semibold text-gray-800 shadow hover:bg-gray-100">
+            Edit task
+          </h1>
+        </Link>
+      </div>
       {task && (
         <Link href={`/${task?.id}/edit`}>
           <Card>
