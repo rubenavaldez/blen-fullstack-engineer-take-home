@@ -37,9 +37,16 @@ export default function Add() {
     },
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log('From Data: ', data);
-    router.push('/');
+  const onSubmit = async (data: FormData) => {
+    const payload: FormData = {
+      title: formData.title,
+      description: formData.description,
+      dueDate: formData.dueDate.toString(),
+    };
+
+    console.log('From Data: ', payload);
+
+    // router.push('/');
   };
 
   return (

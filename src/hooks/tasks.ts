@@ -24,14 +24,14 @@ export async function getTaskById(id: number): Promise<ITask | null> {
   };
 }
 
-export async function createTask(name: string, title: string, description: string) {
+export async function createTask(title: string, description: string, dueDate: String) {
   const result: ITask = await db
     .insert(tasks)
     .values({
       title: title,
       description: description,
       createdAt: Date.now(),
-      dueDate: Date.now(),
+      dueDate: dueDate,
       isCompleted: false,
       updatedAt: Date.now(),
     })
