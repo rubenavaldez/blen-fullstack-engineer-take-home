@@ -9,14 +9,12 @@ import {
 } from '@/components/ui/card';
 import { ITask } from '@/interfaces';
 import Link from 'next/link';
+
 import { useParams } from 'next/navigation';
 
 export default function Detail() {
   const params = useParams();
   const { id } = params;
-  console.log(id);
-  // const taskbyId: ITask = getTaskById(Number(id));
-  // console.log(taskbyId);
   const tasks: ITask[] = [
     {
       id: 1234,
@@ -37,7 +35,7 @@ export default function Detail() {
       updatedAt: '09/12/24',
     },
   ];
-  const task: ITask | undefined = tasks.find((t) => t.id.toString() == '1234');
+  const task: ITask | undefined = tasks.find((t) => t.id.toString() == id);
 
   return (
     <>

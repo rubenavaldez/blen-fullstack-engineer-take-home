@@ -1,27 +1,36 @@
 import { db } from '@/db/client';
 import { tasks } from '@/db/schema';
+import { ITask } from '@/interfaces';
 
-export async function getAllTasks() {
+export async function getAllTasks(): Promise<ITask[]> {
   const result = await db.query.tasks.findMany();
   return result;
 }
 
-export async function getTaskById(id: number) {
-  const task = await db.tasks.findUnique({
-    where: { id },
+export async function getTaskById(id: number): Promise<ITask | null> {
+  const task: ITask = await db.tasks.findUnique({
+    where: { id: id },
   });
-  console.log('get one task', task);
-  return task;
+
+  // console.log('get one task', task);
+  return {
+    id: task.id,
+    title: task.title,
+    description: task.description,
+    createdAt: task.createdAt,
+    dueDate: task.dueDate,
+    isCompleted: task.isCompleted,
+    updatedAt: task.updatedAt,
+  };
 }
 
 export async function createTask(name: string, title: string, description: string) {
-  const result = await db
+  const result: ITask = await db
     .insert(tasks)
     .values({
-      name: name,
       title: title,
       description: description,
-      createAt: Date.now(),
+      createdAt: Date.now(),
       dueDate: Date.now(),
       isCompleted: false,
       updatedAt: Date.now(),
