@@ -34,7 +34,8 @@ export default async function Detail({ params }: DetailsProps) {
   return (
     <>
       <div className="mb-8 flex justify-center">
-        <Link href={`/${params.id}/edit`}>
+        <Link
+          href={`/middleware/add/${task?.id}/${task?.title}/${task?.description}/${task?.dueDate}/editExisting`}>
           <h1 className="rounded-lg bg-white p-4 text-center text-xl font-semibold text-gray-800 shadow hover:bg-gray-100">
             Edit task
           </h1>

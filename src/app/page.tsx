@@ -13,6 +13,14 @@ import { ITask } from '@/interfaces';
 export default async function Home() {
   const tasks: ITask[] = await getAllTasks();
 
+  function getDeleteRoute(task: ITask) {
+    return `/middleware/delete/${task.id}`;
+  }
+
+  function getCompleteRoute(task: ITask) {
+    return `/middleware/complete/${task.id}`;
+  }
+
   return (
     <main className="flex flex-col gap-10 p-10">
       <div className="mb-8 flex justify-center">
@@ -28,8 +36,8 @@ export default async function Home() {
           {tasks.map((task) => {
             return (
               <div key={'task+' + task.id} className="flex flex-col gap-6">
-                <Link href={`/${task.id}`}>
-                  <Card>
+                <Card>
+                  <Link href={`/${task.id}`}>
                     <CardHeader>
                       <CardTitle>{task.title}</CardTitle>
                       <CardDescription>{task.description}</CardDescription>
@@ -45,8 +53,24 @@ export default async function Home() {
                     <CardFooter>
                       <p>Last updated: {task.updatedAt}</p>
                     </CardFooter>
-                  </Card>
-                </Link>
+                  </Link>
+                  <hr />
+                  <CardFooter>
+                    {/* Complete Button */}
+                    <Link href={getCompleteRoute(task)}>
+                      <button className="mr-2 rounded-lg bg-green-500 px-4 py-2 text-white hover:bg-green-600">
+                        Complete
+                      </button>
+                    </Link>
+
+                    {/* Delete Button */}
+                    <Link href={getDeleteRoute(task)}>
+                      <button className="mr-2 rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600">
+                        Delete
+                      </button>
+                    </Link>
+                  </CardFooter>
+                </Card>
               </div>
             );
           })}
