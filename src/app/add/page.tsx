@@ -38,6 +38,7 @@ export default function Add() {
   });
 
   const onSubmit = async (data: FormData) => {
+    if (!formData.title || !formData.description || !formData.dueDate) return;
     const payload: FormData = {
       title: formData.title,
       description: formData.description,
@@ -46,7 +47,7 @@ export default function Add() {
 
     console.log('From Data: ', payload);
 
-    // router.push('/');
+    router.push('/');
   };
 
   return (
