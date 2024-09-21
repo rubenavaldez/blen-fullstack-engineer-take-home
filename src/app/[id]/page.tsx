@@ -42,7 +42,7 @@ export default async function Detail({ params }: DetailsProps) {
         </Link>
       </div>
       {task && (
-        <Link href={`/${task?.id}/edit`}>
+        <>
           <Card>
             <CardHeader>
               <CardTitle>{task?.title}</CardTitle>
@@ -61,7 +61,7 @@ export default async function Detail({ params }: DetailsProps) {
               <p>Last updated: {task?.updatedAt}</p>
             </CardFooter>
           </Card>
-        </Link>
+        </>
       )}
     </>
   );

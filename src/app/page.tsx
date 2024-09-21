@@ -46,13 +46,6 @@ export default async function Home() {
                       <p> Status: {task.isCompleted ? 'Completed' : 'Incomplete'}</p>
                       <p> Due {task.dueDate}</p>
                     </CardContent>
-                    <hr />
-                    <CardFooter>
-                      <p>Created At: {task.createdAt}</p>
-                    </CardFooter>
-                    <CardFooter>
-                      <p>Last updated: {task.updatedAt}</p>
-                    </CardFooter>
                   </Link>
                   <hr />
                   <CardFooter>
